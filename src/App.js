@@ -5,24 +5,26 @@ import {createCar, getCar} from "./services/services/cars.service";
 import {useEffect, useState} from "react";
 
 function App() {
-
     const [cars, setCars] = useState([])
 
     let [model, setModel] = useState('')
-    let [price, setPrice] = useState(0)
-    let [year, setYear] = useState(0)
+    let [price, setPrice] = useState('')
+    let [year, setYear] = useState('')
 
 
     const carInfo = {
         model: model,
-        price: price,
-        year: year
+        price: +price,
+        year: +year
     }
 
 
     const save = (e) => {
         e.preventDefault()
         createCar(carInfo)
+        setModel('')
+        setPrice('')
+        setYear('')
 
     }
 
@@ -30,30 +32,42 @@ function App() {
     useEffect(() => {
         getCar().then(value => setCars([...value]))
 
-    }, [])
 
+    }, [cars])
 
-    // useEffect(() => {
-    //     createCar(carInfo).then(value => setCars(value))
-    // }, [])
-    // //
 
 
 
     let onModelChange = (e) => {
-        setModel(e.target.value)
+
+
+        if  (e.target.value.length >= 1 && e.target.value.length <= 20){
+            console.log('Good')
+            setModel(e.target.value)
+        }
+        else{
+            console.log('Error')
+           e.preventDefault()
+        }
     }
     let onPriceChange = (e) => {
         setPrice(e.target.value)
+
+        if (e.target.value >= 0){
+            setPrice(e.target.value)
+        } else{
+            console.log('Errror')
+            e.preventDefault()
+        }
     }
     let onYearChange = (e) => {
         setYear(e.target.value)
     }
 
 
+    const currentYear = new Date().getFullYear()
 
 
-    console.log(cars)
 
 
     return (
@@ -68,7 +82,7 @@ function App() {
 
             {
                 cars.map(value => {
-                    return <div>{value.model}</div>
+                    return <div>{value.model} - {value.price} - {value.year}</div>
                 })
             }
 
