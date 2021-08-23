@@ -5,7 +5,6 @@ const getCar = () => {
 
 
 const createCar = (info) => {
-
  return fetch('http://91.201.233.14//api/v1/cars', {
   method: 'POST',
   body: JSON.stringify(info),
@@ -16,9 +15,6 @@ const createCar = (info) => {
  })
 
      .then(response => response.json())
-
-
-
 
 }
 
@@ -41,7 +37,8 @@ const deleteCarAPI = (id) => {
    }
 
   })
-      .then(response => response.json())
+      .then(response => getCar())
+
  }
 
 

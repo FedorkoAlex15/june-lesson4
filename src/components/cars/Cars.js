@@ -22,7 +22,8 @@ export default function Cars(){
             model: model,
             price: price,
             year: year
-        }).then(value => setCars([...cars, value]))
+         }).then(value => setCars([...cars, value]))
+
 
         setModel('')
         setPrice('')
@@ -33,29 +34,27 @@ export default function Cars(){
     useEffect(() => {
         getCar().then(value => setCars([...value]))
 
+
+
     }, [])
 
 
 
 
     let onModelChange = (e) => {
-        if  (e.target.value.length >= 1 && e.target.value.length <= 20 && !(e.target.value.indexOf(' ') >= 0) ){
-            console.log('Good')
+        if  (e.target.value.length >= 1 && e.target.value.length <= 20 && !(e.target.value.indexOf(' ')  >= 0) ){
             setModel(e.target.value)
-            console.log(e.target.value )
         }
 
         else{
-            console.log('Error')
             e.preventDefault()
+            console.log('bad')
         }
     }
     let onPriceChange = (e) => {
-
         if (e.target.value >= 0){
             setPrice(e.target.value)
         } else{
-            console.log('Errror')
             e.preventDefault()
         }
     }
@@ -64,7 +63,7 @@ export default function Cars(){
             setYear(e.target.value)
         }
         else{
-            console.log('Not good')
+        e.preventDefault()
         }
     }
 
@@ -82,7 +81,8 @@ export default function Cars(){
         updateCarAPI({
             model: model,
             price: price,
-            year: year}, id).then(value => console.log(value))
+            year: year}, id).then(value => setCars(value))
+            .catch(reason => console.error(reason))
 
     }
 
