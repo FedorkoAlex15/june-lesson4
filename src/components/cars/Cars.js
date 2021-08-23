@@ -1,6 +1,6 @@
 import Car from "../car/Car";
 import {useEffect, useState} from "react";
-import {createCar, deleteCarAPI, getCar} from "../../services/cars.service";
+import {createCar, deleteCarAPI, getCar, updateCarAPI} from "../../services/cars.service";
 
 export default function Cars(){
 
@@ -14,29 +14,26 @@ export default function Cars(){
     let [year, setYear] = useState('')
 
 
-    const carInfo = {
-        model: model,
-        price: +price,
-        year: +year
-    }
 
 
     const save = (e) => {
         e.preventDefault()
-        createCar(carInfo)
+        createCar({
+            model: model,
+            price: price,
+            year: year
+        }).then(value => setCars([...cars, value]))
+
         setModel('')
         setPrice('')
         setYear('')
 
     }
 
-
     useEffect(() => {
         getCar().then(value => setCars([...value]))
 
-
-
-    }, [cars])
+    }, [])
 
 
 
@@ -73,12 +70,23 @@ export default function Cars(){
 
 
 
-    let deleteCar = (id) => {
-         deleteCarAPI(id).then(value => console.log(value))
+    const deleteCar = (id) => {
+         deleteCarAPI(id)
+       setCars( cars.filter(value => value.id !== id))
 
 
     }
 
+
+    const updateCar = (id) => {
+        updateCarAPI({
+            model: model,
+            price: price,
+            year: year}, id).then(value => console.log(value))
+
+    }
+
+console.log(cars)
 
     return(
         <div>
@@ -92,7 +100,7 @@ export default function Cars(){
 
             {
                 cars.map(value => {
-                    return <Car key={value.id} items={value} deleteCar={deleteCar}/>
+                    return <Car key={value.id} items={value} deleteCar={deleteCar} updateCar={updateCar}/>
                 })
             }
         </div>

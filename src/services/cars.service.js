@@ -4,10 +4,11 @@ const getCar = () => {
 }
 
 
-const createCar = (carInfo) => {
- fetch('http://91.201.233.14//api/v1/cars', {
+const createCar = (info) => {
+
+ return fetch('http://91.201.233.14//api/v1/cars', {
   method: 'POST',
-  body: JSON.stringify(carInfo),
+  body: JSON.stringify(info),
 
   headers: {
    'Content-type': 'application/json; charset=UTF=8',
@@ -15,24 +16,36 @@ const createCar = (carInfo) => {
  })
 
      .then(response => response.json())
-      .then(json => console.log(json))
+
+
 
 
 }
 
 
 const deleteCarAPI = (id) => {
-   return fetch('http://91.201.233.14/api/v1/cars/' + id , {
-    method: 'DELETE'
+ return fetch('http://91.201.233.14/api/v1/cars/' + id, {
+  method: 'DELETE'
 
-   })
-
-
+ })
 
 }
 
 
-export {getCar, createCar, deleteCarAPI}
+ const updateCarAPI = (info, id) => {
+  return fetch('http://91.201.233.14/api/v1/cars/' + id , {
+   method: 'PUT',
+   body: JSON.stringify(info),
+   headers: {
+    'Content-type': 'application/json; charset=UTF=8',
+   }
+
+  })
+      .then(response => response.json())
+ }
+
+
+export {getCar, createCar, deleteCarAPI, updateCarAPI}
 
 
 

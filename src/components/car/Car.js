@@ -1,15 +1,13 @@
-export default function Car({items: {id, model, price, year}, deleteCar}){
+export default function Car({items: {id, model, price, year}, deleteCar, updateCar}){
 
-const onDeleteCar = () => {
-    deleteCar(id)
-}
 
 
 
     return(
         <div>
             <div>{id} - {model} - {price} - {year} </div>
-            <button onClick={onDeleteCar}>Delete</button>
+            <button onClick={() => deleteCar(id)}>Delete</button>
+            <button onClick={() => updateCar(id)}>Update</button>
             <hr/>
         </div>
     )
